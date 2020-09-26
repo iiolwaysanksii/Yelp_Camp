@@ -1,0 +1,24 @@
+/* body{
+    background: #093028;
+    background: -webkit-linear-gradient(to right, #237A57, #093028);
+    background: linear-gradient(to right, #237A57, #093028);   
+}
+*/
+.navbar{
+    background-color: #0a3229;
+}
+.img-thumbnail img{
+    width: 100%;
+    max-height: 50em;
+}
+.img-thumbnail{
+    padding: 0;
+}
+
+.img-thumbnail .caption-full{
+    padding: 9px;
+}
+
+#delete-form{
+    display: inline;
+}

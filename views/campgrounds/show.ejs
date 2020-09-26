@@ -1,0 +1,61 @@
+<%- include('../partials/header') %> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Yelp Camp</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 1</li>
+                <li class="list-group-item">Info 1</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="img-thumbnail">
+                <img class="img-responsive" src="<%= campground.image %> ">
+                <div class="caption-full">
+                    <h4 class="float-right small">$<%= campground.price %> /night</h4>
+                    <h4> <a><%= campground.name %></a></h4>
+                    <p><%= campground.description %> </p>
+                    <p><em><strong>Submitted by: <%= campground.author.username %></strong></em></p>
+                    <!--currentUser is set us already in app.js, so that we have access to it on all router-->
+                   <!--First we have to check if user is present at all, otherwise it throws error in equal condition check if no user is-->
+                    <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
+                        <a class="btn btn-sm btn-info" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                        <!--This has to be form since we have to send a delete request-->
+                        <form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                            <button class="btn btn-sm btn-danger">DELETE</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="card card-body bg-light">
+                <div class="text-right">
+                    <a class="btn btn-success"href="/campgrounds/<%= campground._id %>/comments/new">Leave a Review</a>
+                </div>
+                <hr>
+                <% campground.comments.forEach( comment => { %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="float-right">12 years ago</span>
+                            <p><%= comment.text %></p>
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                                <a class="btn btn-sm btn-outline-info" 
+                                    href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit"> 
+                                    Edit
+                                </a>
+                                <form id="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                                    <input class="btn btn-sm btn-outline-danger" type="submit" value="Delete">
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                   <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
